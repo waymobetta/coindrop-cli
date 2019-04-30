@@ -17,6 +17,7 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/spf13/cobra"
@@ -34,12 +35,17 @@ usage:
 coindrop-cli balance <owner_wallet_address> <contract_address>
 
 example:
-coindrop-cli balance 0xfedc485ab2c87529fb13414c57e391a98fd113ef 0x600ec79f2B258d7cc625AE80267Eb23689be417b
+coindrop-cli balance --owner=0xfedc485ab2c87529fb13414c57e391a98fd113ef --contract=0x600ec79f2B258d7cc625AE80267Eb23689be417b
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-
-		ownerAddress := common.HexToAddress(args[0])
-		contractAddress := common.HexToAddress(args[1])
+		owner, _ := cmd.Flags().GetString("owner")
+		contract, _ := cmd.Flags().GetString("contract")
+		if owner == "" && contract == "" {
+			fmt.Println("[!] usage: coindrop-cli balance --owner=0xfedc485ab2c87529fb13414c57e391a98fd113ef --contract=0x600ec79f2B258d7cc625AE80267Eb23689be417b")
+			os.Exit(1)
+		}
+		ownerAddress := common.HexToAddress(owner)
+		contractAddress := common.HexToAddress(contract)
 
 		ownerBalance, err := ethereum.GetBalanceOf(
 			ownerAddress,
@@ -63,5 +69,6 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// balanceCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	balanceCmd.Flags().StringP("owner", "o", "", "Address of the ERC-721 holder")
+	balanceCmd.Flags().StringP("contract", "c", "", "Address of the ERC-721 contract")
 }
