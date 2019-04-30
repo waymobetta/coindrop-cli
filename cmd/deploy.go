@@ -17,6 +17,7 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/waymobetta/go-coindrop-api/services/ethereum"
@@ -33,15 +34,19 @@ usage:
 coindrop-cli deploy <token_name> <token_symbol>
 
 example:
-coindrop-cli deploy coindrop-1 cd1
+coindrop-cli deploy --name=<token_name> --symbol=<token_symbol>
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		tokenName := args[0]
-		tokenSymbol := args[1]
+		name, _ := cmd.Flags().GetString("name")
+		symbol, _ := cmd.Flags().GetString("symbol")
+		if name == "" && symbol == "" {
+			fmt.Println("[!] usage: coindrop-cli deploy --name=<token_name> --symbol=<token_symbol>")
+			os.Exit(1)
+		}
 
 		address, err := ethereum.DeployERC721Contract(
-			tokenName,
-			tokenSymbol,
+			name,
+			symbol,
 		)
 		if err != nil {
 			log.Fatal(err)
@@ -61,5 +66,6 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// deployCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	deployCmd.Flags().StringP("name", "n", "", "Name of the ERC-721 contract")
+	deployCmd.Flags().StringP("symbol", "s", "", "Symbol of the ERC-721")
 }

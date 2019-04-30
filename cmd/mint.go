@@ -17,6 +17,7 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"os"
 	"strconv"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -32,19 +33,28 @@ var mintCmd = &cobra.Command{
 mint an ERC-721 for an address
 
 usage:
-coindrop-cli mint <token_id> <contract_address> <recipient_address> <token_uri>
+coindrop-cli mint --id=<token_id> --contract=<contract_address> --recipient=<recipient_address> --uri=<token_uri>
 
 example:
-coindrop-cli mint 0 0x600ec79f2B258d7cc625AE80267Eb23689be417b 0xfedc485ab2c87529fb13414c57e391a98fd113ef bob-archaeologist
+coindrop-cli mint --id=0 --contract=0x600ec79f2B258d7cc625AE80267Eb23689be417b --recipient=0xfedc485ab2c87529fb13414c57e391a98fd113ef --uri=bob-archaeologist
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		tokenId, err := strconv.Atoi(args[0])
+		id, _ := cmd.Flags().GetString("id")
+		contract, _ := cmd.Flags().GetString("contract")
+		recipient, _ := cmd.Flags().GetString("recipient")
+		uri, _ := cmd.Flags().GetString("uri")
+		if id == "" && contract == "" && recipient == "" && uri == "" {
+			fmt.Println("[!] usage: coindrop-cli mint --id=0 --contract=0x600ec79f2B258d7cc625AE80267Eb23689be417b --recipient=0xfedc485ab2c87529fb13414c57e391a98fd113ef --uri=bob-archaeologist")
+			os.Exit(1)
+		}
+
+		tokenId, err := strconv.Atoi(id)
 		if err != nil {
 			log.Fatal(err)
 		}
-		contractAddress := common.HexToAddress(args[1])
-		recipientAddress := common.HexToAddress(args[2])
-		tokenURI := args[3]
+		contractAddress := common.HexToAddress(contract)
+		recipientAddress := common.HexToAddress(recipient)
+		tokenURI := uri
 		tx, err := ethereum.MintERC721Token(
 			tokenId,
 			contractAddress,
@@ -69,5 +79,8 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// mintCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	mintCmd.Flags().StringP("id", "i", "", "Unique ERC-721 Token ID")
+	mintCmd.Flags().StringP("contract", "c", "", "Address of the ERC-721 contract")
+	mintCmd.Flags().StringP("recipient", "r", "", "Address of the ERC-721 recipient")
+	mintCmd.Flags().StringP("uri", "u", "", "ERC-721 Token URI")
 }

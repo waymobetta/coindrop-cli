@@ -17,6 +17,7 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/spf13/cobra"
@@ -31,13 +32,19 @@ var supplyCmd = &cobra.Command{
 get the total supply of ERC-721s minted from a contract
 
 usage:
-coindrop-cli supply <contract_address>
+coindrop-cli supply --contract=<contract_address>
 
 example:
-coindrop-cli supply 0x600ec79f2B258d7cc625AE80267Eb23689be417b
+coindrop-cli supply --contract=0x600ec79f2B258d7cc625AE80267Eb23689be417b
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		contractAddress := common.HexToAddress(args[0])
+		contract, _ := cmd.Flags().GetString("contract")
+		if contract == "" {
+			fmt.Println("[!] usage: coindrop-cli supply --contract=<contract_address>")
+			os.Exit(1)
+		}
+
+		contractAddress := common.HexToAddress(contract)
 		totalSupply, err := ethereum.GetTotalSupply(
 			contractAddress,
 		)
@@ -59,5 +66,5 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// supplyCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	supplyCmd.Flags().StringP("contract", "c", "", "Address of the ERC-721 contract")
 }
