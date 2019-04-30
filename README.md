@@ -5,5 +5,5 @@ CLI for interacting with the Coindrop service
 
 ### Non-CLI contract interaction
 - URL: https://vintage.myetherwallet.com/#contracts
-- ABI: go-coindrop-cli/contracts/build/erc721_sol_CoindropERC721.abi
+- ABI: github.com/waymobetta/go-coindrop-api/services/ethereum/contracts/build/erc721_sol_CoindropERC721.abi
 - access..
