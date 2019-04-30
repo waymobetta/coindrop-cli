@@ -17,7 +17,7 @@ package cmd
 import (
 	"fmt"
 	"log"
-	"math/big"
+	"strconv"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/spf13/cobra"
@@ -38,8 +38,10 @@ example:
 coindrop-cli mint 0 0x600ec79f2B258d7cc625AE80267Eb23689be417b 0xfedc485ab2c87529fb13414c57e391a98fd113ef bob-archaeologist
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("minting token for:", args)
-		tokenId := big.NewInt(int64(args[0]))
+		tokenId, err := strconv.Atoi(args[0])
+		if err != nil {
+			log.Fatal(err)
+		}
 		contractAddress := common.HexToAddress(args[1])
 		recipientAddress := common.HexToAddress(args[2])
 		tokenURI := args[3]
