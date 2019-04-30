@@ -25,7 +25,7 @@ import (
 // deployCmd represents the deploy command
 var deployCmd = &cobra.Command{
 	Use:   "deploy",
-	Short: "deploy an ERC-721 contract",
+	Short: "Deploy an ERC-721 contract",
 	Long: `
 deploy an ERC-721 contract to the Ethereum network
 

@@ -26,7 +26,7 @@ import (
 // supplyCmd represents the supply command
 var supplyCmd = &cobra.Command{
 	Use:   "supply",
-	Short: "get the total supply of ERC-721s minted",
+	Short: "Get the total supply of ERC-721s minted",
 	Long: `
 get the total supply of ERC-721s minted from a contract
 
