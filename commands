@@ -1,0 +1,20 @@
+commands
+
+deploy
+coindrop-cli deploy --name=coindrop-task-1 --symbol=cdt1
+
+mint
+
+coindrop-cli mint --id=0 --contract=0x11e1352071A6B850fcF45F793b1c4B251b0c432f --recipient=0xd2618223671427bc3d91e861161efbd28a994b4b --uri=coindrop-task-1
+
+balance
+coindrop-cli balance --owner=0xd2618223671427bc3d91e861161efbd28a994b4b --contract=0x11e1352071A6B850fcF45F793b1c4B251b0c432f
+
+supply
+coindrop-cli supply --contract=0x11e1352071A6B850fcF45F793b1c4B251b0c432f
+
+name
+coindrop-cli name --contract=0x11e1352071A6B850fcF45F793b1c4B251b0c432f
+
+symbol
+coindrop-cli symbol --contract=0x11e1352071A6B850fcF45F793b1c4B251b0c432f
