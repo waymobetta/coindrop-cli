@@ -5,16 +5,16 @@ coindrop-cli deploy --name=coindrop-task-1 --symbol=cdt1
 
 mint
 
-coindrop-cli mint --id=0 --contract=0x11e1352071A6B850fcF45F793b1c4B251b0c432f --recipient=0xd2618223671427bc3d91e861161efbd28a994b4b --uri=coindrop-task-1
+coindrop-cli mint --id=0 --contract=0x6E2a13bfBf9a8429fc12a8b798F2a797875e13eb --recipient=0xc6d2ce8a907a2a86bcef53f4526bce41d6bb0ed1 --uri=colonizer_1
 
 balance
-coindrop-cli balance --owner=0xd2618223671427bc3d91e861161efbd28a994b4b --contract=0x11e1352071A6B850fcF45F793b1c4B251b0c432f
+coindrop-cli balance --owner=0xc6d2ce8a907a2a86bcef53f4526bce41d6bb0ed1 --contract=0x6E2a13bfBf9a8429fc12a8b798F2a797875e13eb
 
 supply
-coindrop-cli supply --contract=0x11e1352071A6B850fcF45F793b1c4B251b0c432f
+coindrop-cli supply --contract=0x6E2a13bfBf9a8429fc12a8b798F2a797875e13eb
 
 name
-coindrop-cli name --contract=0x11e1352071A6B850fcF45F793b1c4B251b0c432f
+coindrop-cli name --contract=0x6E2a13bfBf9a8429fc12a8b798F2a797875e13eb
 
 symbol
-coindrop-cli symbol --contract=0x11e1352071A6B850fcF45F793b1c4B251b0c432f
+coindrop-cli symbol --contract=0x6E2a13bfBf9a8429fc12a8b798F2a797875e13eb
