@@ -16,9 +16,9 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"os"
 
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/waymobetta/go-coindrop-api/services/ethereum"
 )
@@ -49,7 +49,7 @@ coindrop-cli deploy --name=<token_name> --symbol=<token_symbol>
 			symbol,
 		)
 		if err != nil {
-			log.Fatal(err)
+			log.Printf("[cmd/deploy] unable to deploy contract: %v\n", err)
 		}
 		fmt.Println("address:", address.Hex())
 	},
