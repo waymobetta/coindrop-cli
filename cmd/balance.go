@@ -16,10 +16,10 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/ethereum/go-ethereum/common"
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/waymobetta/go-coindrop-api/services/ethereum"
 )
@@ -52,7 +52,7 @@ coindrop-cli balance --owner=0xfedc485ab2c87529fb13414c57e391a98fd113ef --contra
 			contractAddress,
 		)
 		if err != nil {
-			log.Fatal(err)
+			log.Printf("[cmd/balance] unable to retrieve token balance: %v\n", err)
 		}
 		fmt.Println("balance:", ownerBalance)
 	},
