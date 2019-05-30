@@ -16,10 +16,10 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/ethereum/go-ethereum/common"
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/waymobetta/go-coindrop-api/services/ethereum"
 )
@@ -49,7 +49,7 @@ coindrop-cli symbol --contract=0x600ec79f2B258d7cc625AE80267Eb23689be417b
 			contractAddress,
 		)
 		if err != nil {
-			log.Fatal(err)
+			log.Printf("[cmd/symbol] unable to retrieve token symbol: %v\n", err)
 		}
 		fmt.Println("symbol:", tokenSymbol)
 	},
